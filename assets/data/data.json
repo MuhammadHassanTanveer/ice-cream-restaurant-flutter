@@ -1,0 +1,70 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Burgers",
+      "foods": [
+        {
+          "id": 101,
+          "name": "Chicago Burger",
+          "image": "https://cdn.vox-cdn.com/thumbor/iJ-6qJqBYuT0pSt0_Gx2X0WLGh8=/0x60:984x575/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/22394261/reve_burger.jpg",
+          "price": 100,
+          "discount_price": 130
+        },
+        {
+          "id": 102,
+          "name": "Beef Burger",
+          "image": "https://www.shutterstock.com/image-photo/burger-tomateoes-lettuce-pickles-on-600nw-2309539129.jpg",
+          "price": 120,
+          "discount_price": 150
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Pizza",
+      "foods": [
+        {
+          "id": 201,
+          "name": "Pepperoni Pizza",
+          "image": "https://tastesbetterfromscratch.com/wp-content/uploads/2023/06/Pepperoni-Pizza-1.jpg",
+          "variations": [
+            {"size": "Small", "price": 150, "discount_price": 170},
+            {"size": "Medium", "price": 180, "discount_price": 200},
+            {"size": "Large", "price": 210, "discount_price": 230}
+          ]
+        },
+        {
+          "id": 202,
+          "name": "Margherita Pizza",
+          "image": "https://ohsweetbasil.com/wp-content/uploads/four-cheese-margherita-pizza-recipe-12-scaled.jpg",
+          "variations": [
+            {"size": "Small", "price": 130, "discount_price": 160},
+            {"size": "Medium", "price": 160, "discount_price": 190},
+            {"size": "Large", "price": 190, "discount_price": 220}
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Drinks",
+      "foods": [
+        {
+          "id": 301,
+          "name": "Coca Cola",
+          "image": "https://st.depositphotos.com/1008960/4136/i/450/depositphotos_41369893-stock-photo-can-of-coca-cola-on.jpg",
+          "price": 50,
+          "discount_price": 60
+        },
+        {
+          "id": 302,
+          "name": "Orange Juice",
+          "image": "https://thumbs.dreamstime.com/b/fresh-splash-squeezed-orange-juice-pieces-oranges-black-background-fresh-splash-squeezed-orange-juice-pieces-332895871.jpg",
+          "price": 70,
+          "discount_price": 80
+        }
+      ]
+    }
+  ]
+}
