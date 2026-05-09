@@ -19,70 +19,73 @@ class NotificationScreen extends StatelessWidget {
           fontSize: Dimensions.fontSizeOverLarge(context),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(Dimensions.paddingSizeDefault),
-        child: ListView.separated(
-          itemBuilder: (context, index){
-            return Card(
-              child: Padding(
-                padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
-                child: IntrinsicHeight(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        width: 70,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor.withValues(alpha: 0.2 ),
-                          borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
+      body: SafeArea(
+        bottom: true,
+        child: Padding(
+          padding: EdgeInsets.all(Dimensions.paddingSizeDefault),
+          child: ListView.separated(
+            itemBuilder: (context, index){
+              return Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
+                  child: IntrinsicHeight(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          width: 70,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor.withValues(alpha: 0.2 ),
+                            borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
+                          ),
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text("22",
+                                  style: robotoBold(context).copyWith(
+                                    fontSize: Dimensions.fontSizeLarge(context),
+                                    // color: Theme.of(context).cardColor,
+                                  ),
+                                ),
+                                const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
+                                Text("January",
+                                  style: robotoBold(context).copyWith(
+                                    fontSize: Dimensions.fontSizeDefault(context),
+                                    // color: Theme.of(context).cardColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                        child: Center(
+                        const SizedBox(width: Dimensions.paddingSizeSmall,),
+                        Expanded(
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text("22",
-                                style: robotoBold(context).copyWith(
-                                  fontSize: Dimensions.fontSizeLarge(context),
-                                  // color: Theme.of(context).cardColor,
-                                ),
-                              ),
-                              const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
-                              Text("January",
-                                style: robotoBold(context).copyWith(
-                                  fontSize: Dimensions.fontSizeDefault(context),
-                                  // color: Theme.of(context).cardColor,
-                                ),
+                              Text("Notification Title", style: robotoBold(context),),
+                              const SizedBox(height: Dimensions.paddingSizeSmall,),
+                              Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+                                textAlign: TextAlign.justify,
+                                maxLines: 2,
+                                style: robotoRegular(context).copyWith(fontSize: Dimensions.fontSizeSmall(context)),
                               ),
                             ],
                           ),
                         ),
-                      ),
-                      const SizedBox(width: Dimensions.paddingSizeSmall,),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text("Notification Title", style: robotoBold(context),),
-                            const SizedBox(height: Dimensions.paddingSizeSmall,),
-                            Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
-                              textAlign: TextAlign.justify,
-                              maxLines: 2,
-                              style: robotoRegular(context).copyWith(fontSize: Dimensions.fontSizeSmall(context)),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          },
-          separatorBuilder: (context, index) => const SizedBox(
-            height: Dimensions.paddingSizeExtraSmall,
+              );
+            },
+            separatorBuilder: (context, index) => const SizedBox(
+              height: Dimensions.paddingSizeExtraSmall,
+            ),
+            itemCount: 10,
           ),
-          itemCount: 10,
         ),
       ),
     );

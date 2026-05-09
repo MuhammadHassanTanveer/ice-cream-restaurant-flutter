@@ -105,6 +105,7 @@ class _TakeOrderScreenState extends State<TakeOrderScreen> {
               return const Center(child: CircularProgressIndicator());
             }
             return SafeArea(
+              bottom: true,
               child: Column(
                 children: [
                   Padding(

@@ -46,6 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
+        bottom: true,
         child: SingleChildScrollView(
           child: SizedBox(
             width: size.width,

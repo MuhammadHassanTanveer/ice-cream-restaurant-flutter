@@ -25,10 +25,10 @@ class DashboardModel {
 
   factory DashboardModel.fromJson(Map<String, dynamic> json) => DashboardModel(
     date: DateTime.parse(json["date"]),
-    totalOrders: json["total_orders"],
-    pendingOrders: json["pending_orders"],
-    completedOrders: json["completed_orders"],
-    cancelledOrders: json["cancelled_orders"],
+    totalOrders: json["total_orders"] ?? 0,
+    pendingOrders: json["pending_orders"] ?? 0,
+    completedOrders: json["completed_orders"] ?? 0,
+    cancelledOrders: json["cancelled_orders"] ?? 0,
   );
 
   Map<String, dynamic> toJson() => {

@@ -989,12 +989,15 @@ class _OrderStatusScreenState extends State<OrderStatusScreen>
           ],
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          _buildPendingOrdersList(),
-          _buildCompleteOrdersList(),
-        ],
+      body: SafeArea(
+        bottom: true,
+        child: TabBarView(
+          controller: _tabController,
+          children: [
+            _buildPendingOrdersList(),
+            _buildCompleteOrdersList(),
+          ],
+        ),
       ),
     );
   }

@@ -16,13 +16,22 @@ class DashboardProvider with ChangeNotifier{
 
   Future<void> fetchDashboardStats({required String date}) async {
     _isLoading = true;
+    _error = null;
     notifyListeners();
 
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var userId = prefs.getInt('id');
       var userToken = prefs.getString('token');
+
+      debugPrint('=== Dashboard API Debug ===');
+      debugPrint('User ID: $userId');
+      debugPrint('User Token: ${userToken?.substring(0, 20)}...');
+      debugPrint('Requested Date: $date');
+
       final url = Uri.parse('${AppConstants.baseUrl}/orders/stats/daily?date=$date&user_id=$userId');
+      debugPrint('API URL: $url');
+
       final headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -31,17 +40,28 @@ class DashboardProvider with ChangeNotifier{
 
       final response = await http.get(url, headers: headers);
 
+      debugPrint('Response Status Code: ${response.statusCode}');
+      debugPrint('Response Body: ${response.body}');
+
       if (response.statusCode == 200) {
+        debugPrint("Dashboard stats fetched successfully");
         dashboardStats = dashboardModelFromJson(response.body);
         _error = null;
+      } else if (response.statusCode == 401) {
+        _error = 'Unauthorized: Please login again';
+        debugPrint('Error: Unauthorized access - 401');
+      } else if (response.statusCode == 404) {
+        _error = 'No data found for this date';
+        debugPrint('Error: No data found - 404');
       } else {
         _error = 'Failed to load dashboard stats: ${response.statusCode}';
+        debugPrint('Error: ${response.statusCode} - ${response.body}');
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
       _error = 'Error fetching dashboard stats: $e';
-      if (kDebugMode) {
-        print('Error: $e');
-      }
+      debugPrint('=== Dashboard API Error ===');
+      debugPrint('Error: $e');
+      debugPrint('Stack Trace: $stackTrace');
     } finally {
       _isLoading = false;
       notifyListeners();

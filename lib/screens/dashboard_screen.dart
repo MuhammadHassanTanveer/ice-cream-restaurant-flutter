@@ -95,6 +95,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ],
       ),
       body: SafeArea(
+        bottom: true,
         child: Padding(
           padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
           child: RefreshIndicator(
@@ -108,9 +109,47 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     if (dashboardProvider.isLoading)
-                      const Center(child: CircularProgressIndicator())
+                      const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(32.0),
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
                     else if (dashboardProvider.error != null)
-                      Center(child: Text(dashboardProvider.error!))
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(32.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.error_outline,
+                                size: 64,
+                                color: Colors.red.withOpacity(0.6),
+                              ),
+                              const SizedBox(height: 16),
+                              Text(
+                                dashboardProvider.error!,
+                                style: robotoBold(context).copyWith(
+                                  fontSize: Dimensions.fontSizeDefault(context),
+                                  color: Colors.red,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 24),
+                              ElevatedButton.icon(
+                                onPressed: () => _loadDashboardData(),
+                                icon: const Icon(Icons.refresh),
+                                label: const Text('Retry'),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Theme.of(context).primaryColor,
+                                  foregroundColor: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
                     else if (dashboardProvider.dashboardStats != null) ...[
                         _buildStatsCards(context, size, dashboardProvider.dashboardStats!),
                         SizedBox(height: Dimensions.paddingSizeDefault),
@@ -121,7 +160,39 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         // const DottedDivider(),
                         // SizedBox(height: Dimensions.paddingSizeDefault),
                         // _buildTodayDeals(context),
-                      ],
+                      ]
+                    else
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(32.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.info_outline,
+                                size: 64,
+                                color: Theme.of(context).hintColor.withOpacity(0.5),
+                              ),
+                              const SizedBox(height: 16),
+                              Text(
+                                'No data available',
+                                style: robotoBold(context).copyWith(
+                                  fontSize: Dimensions.fontSizeDefault(context),
+                                  color: Theme.of(context).hintColor,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                'Pull down to refresh',
+                                style: robotoRegular(context).copyWith(
+                                  fontSize: Dimensions.fontSizeSmall(context),
+                                  color: Theme.of(context).hintColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                   ],
                 ),
               ),
