@@ -332,7 +332,7 @@ class _TakeOrderScreenState extends State<TakeOrderScreen> {
                               child: ClipRRect(
                                 borderRadius: const BorderRadius.vertical(top: Radius.circular(Dimensions.radiusDefault)),
                                 child: CustomImageWidget(
-                                  image: food.image,
+                                  image: food.image ?? '',
                                   placeholder: "assets/images/placeholder.png",
                                 ),
                               ),
@@ -415,7 +415,7 @@ class _TakeOrderScreenState extends State<TakeOrderScreen> {
                         width: 60,
                         height: 60,
                         child: CustomImageWidget(
-                          image: item.food.image,
+                          image: item.food.image ?? '',
                           placeholder: "assets/images/placeholder.png",
                         ),
                       ),
@@ -497,8 +497,44 @@ class _TakeOrderScreenState extends State<TakeOrderScreen> {
               child: Text("Select Table", style: robotoBold(context)),
             ),
             const SizedBox(height: Dimensions.paddingSizeDefault),
-            if (provider.tables.isEmpty)
-              const Center(child: CircularProgressIndicator())
+            if (provider.isLoadingTables)
+              const Center(
+                child: Padding(
+                  padding: EdgeInsets.all(32.0),
+                  child: CircularProgressIndicator(),
+                ),
+              )
+            else if (provider.tables.isEmpty)
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(32.0),
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.table_restaurant_outlined,
+                        size: 64,
+                        color: Theme.of(context).hintColor.withOpacity(0.5),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        "No tables available",
+                        style: robotoBold(context).copyWith(
+                          fontSize: Dimensions.fontSizeLarge(context),
+                          color: Theme.of(context).hintColor,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        "Please contact the administrator",
+                        style: robotoRegular(context).copyWith(
+                          fontSize: Dimensions.fontSizeSmall(context),
+                          color: Theme.of(context).hintColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
             else
               GridView.builder(
                 shrinkWrap: true,
@@ -833,7 +869,7 @@ class _TakeOrderScreenState extends State<TakeOrderScreen> {
                       ),
 
                       // Tax
-                      if (provider.taxModel != null) ...[
+                      if (provider.taxModel != null && provider.taxModel!.type != null && provider.taxModel!.value != null) ...[
                         const Divider(),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),

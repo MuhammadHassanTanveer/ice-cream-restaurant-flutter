@@ -191,30 +191,34 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "Pending Orders",
-                            style: robotoBold(context).copyWith(
-                              fontSize: Dimensions.fontSizeDefault(context),
-                              color: Theme.of(context).cardColor,
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              "Pending Orders",
+                              style: robotoBold(context).copyWith(
+                                fontSize: Dimensions.fontSizeDefault(context),
+                                color: Theme.of(context).cardColor,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                          ),
-                          SizedBox(height: Dimensions.paddingSizeSmall),
-                          Text(
-                            stats.pendingOrders.toString(),
-                            style: robotoBold(context).copyWith(
-                              fontSize: Dimensions.fontSizeLarge(context),
-                              color: Theme.of(context).cardColor,
-                            ),
-                          )
-                        ],
+                            SizedBox(height: Dimensions.paddingSizeSmall),
+                            Text(
+                              stats.pendingOrders.toString(),
+                              style: robotoBold(context).copyWith(
+                                fontSize: Dimensions.fontSizeLarge(context),
+                                color: Theme.of(context).cardColor,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                       CustomAssetImageWidget(
                         "assets/images/regular_order.png",
-                        width: 30,
-                        height: 30,
+                        width: 20,
+                        height: 20,
                         color: Theme.of(context).cardColor,
                       )
                     ],
@@ -234,30 +238,34 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "Complete Orders",
-                            style: robotoBold(context).copyWith(
-                              fontSize: Dimensions.fontSizeDefault(context),
-                              color: Theme.of(context).cardColor,
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              "Complete Orders",
+                              style: robotoBold(context).copyWith(
+                                fontSize: Dimensions.fontSizeDefault(context),
+                                color: Theme.of(context).cardColor,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                          ),
-                          SizedBox(height: Dimensions.paddingSizeSmall),
-                          Text(
-                            stats.completedOrders.toString(),
-                            style: robotoBold(context).copyWith(
-                              fontSize: Dimensions.fontSizeLarge(context),
-                              color: Theme.of(context).cardColor,
-                            ),
-                          )
-                        ],
+                            SizedBox(height: Dimensions.paddingSizeSmall),
+                            Text(
+                              stats.completedOrders.toString(),
+                              style: robotoBold(context).copyWith(
+                                fontSize: Dimensions.fontSizeLarge(context),
+                                color: Theme.of(context).cardColor,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                       CustomAssetImageWidget(
                         "assets/images/regular_order.png",
-                        width: 30,
-                        height: 30,
+                        width: 20,
+                        height: 20,
                         color: Theme.of(context).cardColor,
                       )
                     ],

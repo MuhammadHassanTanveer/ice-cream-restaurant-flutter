@@ -51,8 +51,8 @@ class Category {
 class Food {
   final int id;
   final String name;
-  final String description;
-  final String image;
+  final String? description;
+  final String? image;
   final bool hasVariations;
   final int price;
   final int? discountPrice;
@@ -61,11 +61,11 @@ class Food {
   Food({
     required this.id,
     required this.name,
-    required this.description,
-    required this.image,
+    this.description,
+    this.image,
     required this.hasVariations,
     required this.price,
-    required this.discountPrice,
+    this.discountPrice,
     this.variations,
   });
 
@@ -93,16 +93,16 @@ class Food {
 }
 
 class Variation {
-  final int id; // Make sure this exists
+  final int id;
   final String size;
   final int price;
-  final int discountPrice;
+  final int? discountPrice;
 
   Variation({
     required this.id,
     required this.size,
     required this.price,
-    required this.discountPrice,
+    this.discountPrice,
   });
 
   factory Variation.fromJson(Map<String, dynamic> json) => Variation(

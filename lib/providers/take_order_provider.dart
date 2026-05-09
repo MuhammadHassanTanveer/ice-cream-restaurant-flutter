@@ -137,9 +137,10 @@ class TakeOrderProvider with ChangeNotifier {
             selectedVariations[i].isNotEmpty &&
             selectedVariations[i][0]) {
           final variation = food.variations![i];
+          final discountPrice = variation.discountPrice;
           // Use variation's discount price if available, otherwise regular price
-          return (variation.discountPrice != null && variation.discountPrice > 0)
-              ? variation.discountPrice.toDouble()
+          return (discountPrice != null && discountPrice > 0)
+              ? discountPrice.toDouble()
               : variation.price.toDouble();
         }
       }
@@ -236,9 +237,13 @@ class TakeOrderProvider with ChangeNotifier {
 
   List<RestaurantTableModel> tables = [];
   int? selectedTableId;
+  bool isLoadingTables = false;
 
   Future<void> getRestaurantTable() async {
     try {
+      isLoadingTables = true;
+      notifyListeners();
+
       SharedPreferences pref = await SharedPreferences.getInstance();
       var userToken = pref.getString('token');
       final url = Uri.parse('${AppConstants.baseUrl}/restaurant-tables');
@@ -252,12 +257,15 @@ class TakeOrderProvider with ChangeNotifier {
 
       if (response.statusCode == 200) {
         tables = restaurantTableModelFromJson(response.body);
-        notifyListeners();
       } else {
         throw Exception('Failed to get Restaurant Tables: ${response.statusCode}');
       }
     } catch (error) {
-      rethrow;
+      debugPrint('Error loading tables: $error');
+      tables = []; // Set to empty list on error
+    } finally {
+      isLoadingTables = false;
+      notifyListeners();
     }
   }
 
@@ -300,12 +308,12 @@ class TakeOrderProvider with ChangeNotifier {
   }
 
   double get taxAmount {
-    if (taxModel == null) return 0.0;
+    if (taxModel == null || taxModel!.type == null || taxModel!.value == null) return 0.0;
 
     if (taxModel!.type == 'percentage') {
-      return subtotal * (double.parse(taxModel!.value) / 100);
+      return subtotal * (double.parse(taxModel!.value!) / 100);
     } else {
-      return double.parse(taxModel!.value);
+      return double.parse(taxModel!.value!);
     }
   }
 

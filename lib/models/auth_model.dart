@@ -2,7 +2,6 @@
 //
 //     final authModel = authModelFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 AuthModel authModelFromJson(String str) => AuthModel.fromJson(json.decode(str));
@@ -50,18 +49,18 @@ class User {
   final String name;
   final dynamic surname;
   final String email;
-  final String phone;
-  final String address;
+  final String? phone;
+  final String? address;
   final dynamic photo;
 
   User({
     required this.id,
     required this.name,
-    required this.surname,
+    this.surname,
     required this.email,
-    required this.phone,
-    required this.address,
-    required this.photo,
+    this.phone,
+    this.address,
+    this.photo,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(

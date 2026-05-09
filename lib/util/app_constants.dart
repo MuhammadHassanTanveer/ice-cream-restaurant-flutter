@@ -7,8 +7,8 @@ class AppConstants {
 
   static const String fontFamily = 'Roboto';
 
-  static const String baseUrl = 'http://ice_cream_restaurant.test/api';
-  static const String imageUrl = 'http://ice_cream_restaurant.test/';
+  static const String baseUrl = 'http://192.168.100.170:8000/api';
+  static const String imageUrl = 'http://192.168.100.170:8000/';
 
   static const double maxLimitOfFileSentINConversation = 25;
   static const double maxLimitOfTotalFileSent = 5;

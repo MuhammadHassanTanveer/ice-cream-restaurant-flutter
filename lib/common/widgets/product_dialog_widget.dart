@@ -49,7 +49,7 @@ class _ProductBottomSheetWidgetState extends State<ProductBottomSheetWidget> {
         : takeOrderProvider.calculateDiscountedPrice(food);
 
     final hasDiscount = hasVariations
-        ? (selectedVariation?.discountPrice != null && selectedVariation!.discountPrice > 0)
+        ? (selectedVariation?.discountPrice != null && selectedVariation!.discountPrice! > 0)
         : (food.discountPrice != null && food.discountPrice! > 0);
 
     final basePrice = hasVariations
@@ -72,11 +72,11 @@ class _ProductBottomSheetWidgetState extends State<ProductBottomSheetWidget> {
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
             child: Row(
               children: [
-                if (food.image.isNotEmpty)
+                if (food.image != null && food.image!.isNotEmpty)
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Image.network(
-                      food.image,
+                      food.image!,
                       width: 50,
                       height: 50,
                       fit: BoxFit.cover,
@@ -188,7 +188,7 @@ class _ProductBottomSheetWidgetState extends State<ProductBottomSheetWidget> {
                                 ),
                               const SizedBox(width: 6),
                               Text(
-                                '${(hasVarDiscount ? variation.discountPrice : variation.price).toStringAsFixed(2)} PKR',
+                                '${(hasVarDiscount ? (variation.discountPrice ?? variation.price) : variation.price).toStringAsFixed(2)} PKR',
                                 style: robotoBold(context).copyWith(
                                     color: hasVarDiscount
                                         ? Theme.of(context).primaryColor
