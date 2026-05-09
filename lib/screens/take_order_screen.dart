@@ -312,6 +312,7 @@ class _TakeOrderScreenState extends State<TakeOrderScreen> {
                     showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
+                      useSafeArea: true,
                       builder: (context) => ProductBottomSheetWidget(food: food),
                     );
                   },

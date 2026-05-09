@@ -58,17 +58,18 @@ class _ProductBottomSheetWidgetState extends State<ProductBottomSheetWidget> {
 
     final isAddToCartEnabled = !hasVariations || selectedVariation != null;
 
-    return Container(
-      width: 550,
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // Header with close button
-          Padding(
+    return SafeArea(
+      child: Container(
+        width: 550,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Header with close button
+            Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
             child: Row(
               children: [
@@ -215,7 +216,12 @@ class _ProductBottomSheetWidgetState extends State<ProductBottomSheetWidget> {
 
           // Bottom Bar
           Container(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.fromLTRB(
+              16,
+              16,
+              16,
+              16 + MediaQuery.of(context).viewInsets.bottom,
+            ),
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
               boxShadow: [BoxShadow(color: Colors.grey[300]!, blurRadius: 10)],
@@ -270,7 +276,8 @@ class _ProductBottomSheetWidgetState extends State<ProductBottomSheetWidget> {
               ],
             ),
           ),
-        ],
+          ],
+        ),
       ),
     );
   }
