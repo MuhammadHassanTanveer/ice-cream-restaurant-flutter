@@ -363,9 +363,17 @@ class TakeOrderProvider with ChangeNotifier {
       Map<String, dynamic> requestBody = {
         'user_id': userId,
         'customer_name': customerName,
+        'subtotal': subtotal.toStringAsFixed(2),
         'tax_amount': taxAmount.toStringAsFixed(2),
+        'total': totalWithTax.toStringAsFixed(2),
         'items': items,
       };
+
+      debugPrint('=== Order Submission Debug ===');
+      debugPrint('Subtotal: ${subtotal.toStringAsFixed(2)}');
+      debugPrint('Tax Amount: ${taxAmount.toStringAsFixed(2)}');
+      debugPrint('Total: ${totalWithTax.toStringAsFixed(2)}');
+      debugPrint('Items Count: ${items.length}');
 
       if (customerPhone != null && customerPhone.isNotEmpty) {
         requestBody['customer_phone'] = customerPhone;
@@ -386,16 +394,22 @@ class TakeOrderProvider with ChangeNotifier {
         'Authorization': 'Bearer $userToken'
       };
 
+      debugPrint('API URL: $url');
+      debugPrint('Request Body: ${jsonEncode(requestBody)}');
+
       final response = await http.post(
         url,
         headers: headers,
         body: jsonEncode(requestBody),
       );
 
+      debugPrint('Response Status Code: ${response.statusCode}');
+      debugPrint('Response Body: ${response.body}');
+
       final responseData = jsonDecode(response.body);
 
       if (response.statusCode == 201) {
-        print('response ${response.statusCode} ${response.body}');
+        debugPrint('✅ Order placed successfully');
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => HomeBottomNavbar(pageIndex: 0)), (route)=> false);
         clearAllData();
         showCustomSnackBar(context, "Order Placed Successfully ", isError: false);
@@ -405,9 +419,13 @@ class TakeOrderProvider with ChangeNotifier {
         if (responseData['errors'] != null) {
           errorMessage = responseData['errors'].values.first.first ?? errorMessage;
         }
+        debugPrint('❌ Order submission failed: $errorMessage');
         throw Exception(errorMessage);
       }
-    } catch (error) {
+    } catch (error, stackTrace) {
+      debugPrint('=== Order Submission Error ===');
+      debugPrint('Error: $error');
+      debugPrint('Stack Trace: $stackTrace');
       rethrow;
     }
   }
@@ -444,15 +462,27 @@ class TakeOrderProvider with ChangeNotifier {
     String? userToken = sharePref.getString('token');
     int? user_id = sharePref.getInt('id');
 
+    debugPrint('=== Pending Orders API Debug ===');
+    debugPrint('User ID: $user_id');
+    debugPrint('User Token: ${userToken?.substring(0, 20)}...');
+    debugPrint('Page Index: $pageIndex');
+    debugPrint('Is Refresh: $isRefresh');
+
     try {
+      final url = Uri.parse("${AppConstants.baseUrl}/orders/$user_id/pending");
+      debugPrint('API URL: $url');
+
        var response = await http.get(
-         Uri.parse("${AppConstants.baseUrl}/orders/$user_id/pending"),
+         url,
          headers: <String, String>{
            'Content-Type': 'application/json',
            'Accept': 'application/json',
            'Authorization': 'Bearer $userToken'
          },
        );
+
+      debugPrint('Response Status Code: ${response.statusCode}');
+      debugPrint('Response Body: ${response.body}');
 
       if (response.statusCode == 200) {
         debugPrint('Pending Orders API is working');
@@ -471,14 +501,17 @@ class TakeOrderProvider with ChangeNotifier {
         showMore = pendingOrdersModel!.pagination.total > pendingOrdersData.length;
         showingMore = false;
 
+        debugPrint('Total Orders Loaded: ${pendingOrdersData.length}');
+        debugPrint('Total Available: ${pendingOrdersModel!.pagination.total}');
         notifyListeners();
         return true;
       } else {
         debugPrint('Pending Orders API error: ${response.statusCode} ${response.body}');
         return false;
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
       debugPrint('Error in getPendingOrders: $e');
+      debugPrint('Stack Trace: $stackTrace');
       return false;
     }
   }
@@ -504,15 +537,27 @@ class TakeOrderProvider with ChangeNotifier {
     String? userToken = sharePref.getString('token');
     int? user_id = sharePref.getInt('id');
 
+    debugPrint('=== Complete Orders API Debug ===');
+    debugPrint('User ID: $user_id');
+    debugPrint('User Token: ${userToken?.substring(0, 20)}...');
+    debugPrint('Page Index: $completePageIndex');
+    debugPrint('Is Refresh: $isRefreshComplete');
+
     try {
+      final url = Uri.parse("${AppConstants.baseUrl}/orders/$user_id/complete");
+      debugPrint('API URL: $url');
+
        var response = await http.get(
-         Uri.parse("${AppConstants.baseUrl}/orders/$user_id/complete"),
+         url,
          headers: <String, String>{
            'Content-Type': 'application/json',
            'Accept': 'application/json',
            'Authorization': 'Bearer $userToken'
          },
        );
+
+      debugPrint('Response Status Code: ${response.statusCode}');
+      debugPrint('Response Body: ${response.body}');
 
       if (response.statusCode == 200) {
         debugPrint('Complete Orders API is working');
@@ -535,14 +580,17 @@ class TakeOrderProvider with ChangeNotifier {
         completeShowMore = completeOrdersModel!.pagination.total > completeOrdersData.length;
         completeShowingMore = false;
 
+        debugPrint('Total Complete Orders Loaded: ${completeOrdersData.length}');
+        debugPrint('Total Available: ${completeOrdersModel!.pagination.total}');
         notifyListeners();
         return true;
       } else {
         debugPrint('Complete Orders API error: ${response.statusCode} ${response.body}');
         return false;
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
       debugPrint('Error in getCompleteOrders: $e');
+      debugPrint('Stack Trace: $stackTrace');
       return false;
     }
   }

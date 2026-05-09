@@ -1029,25 +1029,42 @@ class _OrderStatusScreenState extends State<OrderStatusScreen>
           },
           child: orderProvider.pendingOrdersData.isEmpty && !isLoading
               ? Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "No pending orders",
-                  style: robotoMedium(context).copyWith(
-                    fontSize: Dimensions.fontSizeLarge(context),
-                    color: Theme.of(context).hintColor,
+            child: Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.receipt_long_outlined,
+                    size: 80,
+                    color: Theme.of(context).hintColor.withValues(alpha: 0.3),
                   ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  "Pull down to refresh",
-                  style: robotoRegular(context).copyWith(
-                    fontSize: Dimensions.fontSizeSmall(context),
-                    color: Theme.of(context).hintColor,
+                  const SizedBox(height: 24),
+                  Text(
+                    "No pending orders",
+                    style: robotoBold(context).copyWith(
+                      fontSize: Dimensions.fontSizeExtraLarge(context),
+                      color: Theme.of(context).hintColor,
+                    ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 12),
+                  Text(
+                    "New orders will appear here",
+                    style: robotoRegular(context).copyWith(
+                      fontSize: Dimensions.fontSizeDefault(context),
+                      color: Theme.of(context).hintColor.withValues(alpha: 0.7),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    "Pull down to refresh",
+                    style: robotoRegular(context).copyWith(
+                      fontSize: Dimensions.fontSizeSmall(context),
+                      color: Theme.of(context).hintColor.withValues(alpha: 0.5),
+                    ),
+                  ),
+                ],
+              ),
             ),
           )
               : isLoading
@@ -1235,7 +1252,7 @@ class _OrderStatusScreenState extends State<OrderStatusScreen>
       return ClipRRect(
         borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
         child: CustomImageWidget(
-          image: AppConstants.getImageUrl(items[0].foodImage),
+          image: AppConstants.getImageUrl(items[0].foodImage ?? ''),
           placeholder: "assets/images/placeholder.png",
           fit: BoxFit.cover,
         ),
@@ -1252,7 +1269,7 @@ class _OrderStatusScreenState extends State<OrderStatusScreen>
             ClipRRect(
               borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
               child: CustomImageWidget(
-                image: AppConstants.getImageUrl(item.foodImage),
+                image: AppConstants.getImageUrl(item.foodImage ?? ''),
                 placeholder: "assets/images/placeholder.png",
                 fit: BoxFit.cover,
               ),
@@ -1272,7 +1289,7 @@ class _OrderStatusScreenState extends State<OrderStatusScreen>
                       topLeft: Radius.circular(Dimensions.radiusSmall),
                     ),
                     child: CustomImageWidget(
-                      image: AppConstants.getImageUrl(items[0].foodImage),
+                      image: AppConstants.getImageUrl(items[0].foodImage ?? ''),
                       placeholder: "assets/images/placeholder.png",
                       fit: BoxFit.cover,
                     ),
@@ -1285,7 +1302,7 @@ class _OrderStatusScreenState extends State<OrderStatusScreen>
                       topRight: Radius.circular(Dimensions.radiusSmall),
                     ),
                     child: CustomImageWidget(
-                      image: AppConstants.getImageUrl(items[1].foodImage),
+                      image: AppConstants.getImageUrl(items[1].foodImage ?? ''),
                       placeholder: "assets/images/placeholder.png",
                       fit: BoxFit.cover,
                     ),
@@ -1301,7 +1318,7 @@ class _OrderStatusScreenState extends State<OrderStatusScreen>
               bottomRight: Radius.circular(Dimensions.radiusSmall),
             ),
             child: CustomImageWidget(
-              image: AppConstants.getImageUrl(items[2].foodImage),
+              image: AppConstants.getImageUrl(items[2].foodImage ?? ''),
               placeholder: "assets/images/placeholder.png",
               fit: BoxFit.cover,
               height: 40,
@@ -1322,7 +1339,7 @@ class _OrderStatusScreenState extends State<OrderStatusScreen>
                 ClipRRect(
                   borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
                   child: CustomImageWidget(
-                    image: AppConstants.getImageUrl(item.foodImage),
+                    image: AppConstants.getImageUrl(item.foodImage ?? ''),
                     placeholder: "assets/images/placeholder.png",
                     fit: BoxFit.cover,
                   ),
@@ -1416,7 +1433,7 @@ class _OrderStatusScreenState extends State<OrderStatusScreen>
                       ],
                     ),
                   ),
-                  const SizedBox(width: Dimensions.paddingSizeExtraLarge),
+                  const SizedBox(width: Dimensions.paddingSizeSmall),
                   Text(
                     "X ${item.quantity}",
                     style: robotoBold(context).copyWith(
@@ -1488,25 +1505,42 @@ class _CompleteOrderListStateState extends State<CompleteOrderListState> {
           },
           child: orderProvider.completeOrdersData.isEmpty && !isLoading
               ? Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "No completed orders",
-                  style: robotoMedium(context).copyWith(
-                    fontSize: Dimensions.fontSizeLarge(context),
-                    color: Theme.of(context).hintColor,
+            child: Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.check_circle_outline,
+                    size: 80,
+                    color: Theme.of(context).hintColor.withValues(alpha: 0.3),
                   ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  "Pull down to refresh",
-                  style: robotoRegular(context).copyWith(
-                    fontSize: Dimensions.fontSizeSmall(context),
-                    color: Theme.of(context).hintColor,
+                  const SizedBox(height: 24),
+                  Text(
+                    "No completed orders",
+                    style: robotoBold(context).copyWith(
+                      fontSize: Dimensions.fontSizeExtraLarge(context),
+                      color: Theme.of(context).hintColor,
+                    ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 12),
+                  Text(
+                    "Completed orders will appear here",
+                    style: robotoRegular(context).copyWith(
+                      fontSize: Dimensions.fontSizeDefault(context),
+                      color: Theme.of(context).hintColor.withValues(alpha: 0.7),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    "Pull down to refresh",
+                    style: robotoRegular(context).copyWith(
+                      fontSize: Dimensions.fontSizeSmall(context),
+                      color: Theme.of(context).hintColor.withValues(alpha: 0.5),
+                    ),
+                  ),
+                ],
+              ),
             ),
           )
               : isLoading
@@ -1696,7 +1730,7 @@ class _CompleteOrderListStateState extends State<CompleteOrderListState> {
       return ClipRRect(
         borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
         child: CustomImageWidget(
-          image: AppConstants.getImageUrl(items[0].foodImage),
+          image: AppConstants.getImageUrl(items[0].foodImage ?? ''),
           placeholder: "assets/images/placeholder.png",
           fit: BoxFit.cover,
         ),
@@ -1712,7 +1746,7 @@ class _CompleteOrderListStateState extends State<CompleteOrderListState> {
             ClipRRect(
               borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
               child: CustomImageWidget(
-                image: AppConstants.getImageUrl(item.foodImage),
+                image: AppConstants.getImageUrl(item.foodImage ?? ''),
                 placeholder: "assets/images/placeholder.png",
                 fit: BoxFit.cover,
               ),
@@ -1732,7 +1766,7 @@ class _CompleteOrderListStateState extends State<CompleteOrderListState> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
                   child: CustomImageWidget(
-                    image: AppConstants.getImageUrl(item.foodImage),
+                    image: AppConstants.getImageUrl(item.foodImage ?? ''),
                     placeholder: "assets/images/placeholder.png",
                     fit: BoxFit.cover,
                   ),

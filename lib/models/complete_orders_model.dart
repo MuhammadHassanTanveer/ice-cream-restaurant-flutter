@@ -92,7 +92,7 @@ class OrderComplete {
 
 class ItemComplete {
   final String foodName;
-  final String foodImage;
+  final String? foodImage;
   final String? variationName;
   final int quantity;
   final String unitPrice;
@@ -100,8 +100,8 @@ class ItemComplete {
 
   ItemComplete({
     required this.foodName,
-    required this.foodImage,
-    required this.variationName,
+    this.foodImage,
+    this.variationName,
     required this.quantity,
     required this.unitPrice,
     required this.totalPrice,
@@ -151,25 +151,25 @@ class Pagination {
   final int perPage;
   final int currentPage;
   final int lastPage;
-  final int from;
-  final int to;
+  final int? from;
+  final int? to;
 
   Pagination({
     required this.total,
     required this.perPage,
     required this.currentPage,
     required this.lastPage,
-    required this.from,
-    required this.to,
+    this.from,
+    this.to,
   });
 
   factory Pagination.fromJson(Map<String, dynamic> json) => Pagination(
-    total: json["total"],
-    perPage: json["per_page"],
-    currentPage: json["current_page"],
-    lastPage: json["last_page"],
-    from: json["from"] ??0,
-    to: json["to"]??0,
+    total: json["total"] ?? 0,
+    perPage: json["per_page"] ?? 0,
+    currentPage: json["current_page"] ?? 1,
+    lastPage: json["last_page"] ?? 1,
+    from: json["from"],
+    to: json["to"],
   );
 
   Map<String, dynamic> toJson() => {
