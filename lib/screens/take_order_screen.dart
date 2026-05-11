@@ -757,14 +757,17 @@ class _TakeOrderScreenState extends State<TakeOrderScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _buildInfoRow(
-                    context,
-                    icon: Icons.person,
-                    title: "Customer",
-                    value: customerNameController.text
-                ),
+                if (customerNameController.text.isNotEmpty) ...[
+                  _buildInfoRow(
+                      context,
+                      icon: Icons.person,
+                      title: "Customer",
+                      value: customerNameController.text
+                  ),
+                  if (customerPhoneController.text.isNotEmpty)
+                    const SizedBox(width: Dimensions.paddingSizeLarge),
+                ],
                 if (customerPhoneController.text.isNotEmpty) ...[
-                  const SizedBox(width: Dimensions.paddingSizeLarge),
                   _buildInfoRow(
                       context,
                       icon: Icons.phone,
@@ -996,17 +999,15 @@ class _TakeOrderScreenState extends State<TakeOrderScreen> {
           }
         } else if (provider.initialStep == 0.5) {
           if (provider.isIndoor) {
-            if (customerNameController.text.isEmpty) {
-              showCustomSnackBar(context, 'Please enter customer name');
-            } else if (provider.selectedTableId == null) {
+            if (provider.selectedTableId == null) {
               showCustomSnackBar(context, 'Please select a table');
             } else {
               _scrollController.jumpTo(0);
               provider.stepStatusChange(1.0);
             }
           } else {
-            if (customerNameController.text.isEmpty || customerVehicleController.text.isEmpty) {
-              showCustomSnackBar(context, 'Please fill all required fields');
+            if (customerVehicleController.text.isEmpty) {
+              showCustomSnackBar(context, 'Please enter vehicle number');
             } else {
               _scrollController.jumpTo(0);
               provider.stepStatusChange(1.0);
@@ -1015,7 +1016,7 @@ class _TakeOrderScreenState extends State<TakeOrderScreen> {
         } else {
             provider.submitOrder(
               context,
-              customerNameController.text,
+              customerNameController.text.isEmpty ? null : customerNameController.text,
               customerPhoneController.text.isEmpty ? null : customerPhoneController.text,
               customerVehicleController.text.isEmpty ? null : customerVehicleController.text,
             );

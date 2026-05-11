@@ -322,7 +322,7 @@ class TakeOrderProvider with ChangeNotifier {
   }
 
 
-  Future<void> submitOrder(BuildContext context, String customerName, String? customerPhone, String? customerVehicle) async {
+  Future<void> submitOrder(BuildContext context, String? customerName, String? customerPhone, String? customerVehicle) async {
     try {
       SharedPreferences pref = await SharedPreferences.getInstance();
       var userToken = pref.getString('token');
@@ -362,7 +362,6 @@ class TakeOrderProvider with ChangeNotifier {
 
       Map<String, dynamic> requestBody = {
         'user_id': userId,
-        'customer_name': customerName,
         'subtotal': subtotal.toStringAsFixed(2),
         'tax_amount': taxAmount.toStringAsFixed(2),
         'total': totalWithTax.toStringAsFixed(2),
@@ -374,6 +373,10 @@ class TakeOrderProvider with ChangeNotifier {
       debugPrint('Tax Amount: ${taxAmount.toStringAsFixed(2)}');
       debugPrint('Total: ${totalWithTax.toStringAsFixed(2)}');
       debugPrint('Items Count: ${items.length}');
+
+      if (customerName != null && customerName.isNotEmpty) {
+        requestBody['customer_name'] = customerName;
+      }
 
       if (customerPhone != null && customerPhone.isNotEmpty) {
         requestBody['customer_phone'] = customerPhone;
