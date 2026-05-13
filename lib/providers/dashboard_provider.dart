@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/dashboard_model.dart';
-import '../util/app_constants.dart';
+import '../util/api_config_service.dart';
 
 class DashboardProvider with ChangeNotifier{
   DashboardModel? dashboardStats;
@@ -23,13 +23,14 @@ class DashboardProvider with ChangeNotifier{
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var userId = prefs.getInt('id');
       var userToken = prefs.getString('token');
+      final baseUrl = await ApiConfigService.getBaseUrl();
 
       debugPrint('=== Dashboard API Debug ===');
       debugPrint('User ID: $userId');
       debugPrint('User Token: ${userToken?.substring(0, 20)}...');
       debugPrint('Requested Date: $date');
 
-      final url = Uri.parse('${AppConstants.baseUrl}/orders/stats/daily?date=$date&user_id=$userId');
+      final url = Uri.parse('$baseUrl/orders/stats/daily?date=$date&user_id=$userId');
       debugPrint('API URL: $url');
 
       final headers = {

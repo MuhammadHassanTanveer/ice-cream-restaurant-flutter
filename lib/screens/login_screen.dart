@@ -6,6 +6,7 @@ import 'package:restaurant_flutter_app/common/widgets/custom_button_widget.dart'
 import 'package:restaurant_flutter_app/common/widgets/custom_text_field_widget.dart';
 import 'package:restaurant_flutter_app/providers/auth_provider.dart';
 import 'package:restaurant_flutter_app/util/styles.dart';
+import 'package:restaurant_flutter_app/screens/api_settings_screen.dart';
 
 import '../common/widgets/validate_check.dart';
 import '../util/dimensions.dart';
@@ -22,6 +23,36 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  int logoTapCount = 0;
+  DateTime lastLogoTapTime = DateTime.now();
+
+  void _handleLogoTap() {
+    final now = DateTime.now();
+    // Reset counter if more than 3 seconds have passed
+    if (now.difference(lastLogoTapTime).inSeconds > 3) {
+      logoTapCount = 0;
+    }
+
+    logoTapCount++;
+    lastLogoTapTime = now;
+
+    // Trigger settings screen after 5 taps
+    if (logoTapCount == 5) {
+      logoTapCount = 0;
+      _navigateToSettings();
+    }
+  }
+
+  void _navigateToSettings() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => const ApiSettingsScreen()),
+    ).then((result) {
+      // Refresh the screen if settings were changed
+      if (result == true) {
+        setState(() {});
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +68,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: constraints.maxHeight * 0.1),
-                  CustomAssetImageWidget("assets/images/logo.png",
-                    height: 100,
+                  GestureDetector(
+                    onTap: _handleLogoTap,
+                    child: CustomAssetImageWidget("assets/images/logo.png",
+                      height: 100,
+                    ),
                   ),
                   SizedBox(height: constraints.maxHeight * 0.1),
                   Text(

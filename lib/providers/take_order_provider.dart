@@ -12,7 +12,7 @@ import '../models/categories_and_food.dart';
 import '../models/complete_orders_model.dart';
 import '../models/pending_orders_model.dart';
 import '../models/table_model.dart';
-import '../util/app_constants.dart';
+import '../util/api_config_service.dart';
 // import '../models/restaurant_table_model.dart';
 
 class TakeOrderProvider with ChangeNotifier {
@@ -75,7 +75,8 @@ class TakeOrderProvider with ChangeNotifier {
 
   Future<void> getFoods(context) async {
     try {
-      final url = Uri.parse('${AppConstants.baseUrl}/menu');
+      final baseUrl = await ApiConfigService.getBaseUrl();
+      final url = Uri.parse('$baseUrl/menu');
       final headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -246,7 +247,8 @@ class TakeOrderProvider with ChangeNotifier {
 
       SharedPreferences pref = await SharedPreferences.getInstance();
       var userToken = pref.getString('token');
-      final url = Uri.parse('${AppConstants.baseUrl}/restaurant-tables');
+      final baseUrl = await ApiConfigService.getBaseUrl();
+      final url = Uri.parse('$baseUrl/restaurant-tables');
       final headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -275,7 +277,8 @@ class TakeOrderProvider with ChangeNotifier {
     try {
       SharedPreferences pref = await SharedPreferences.getInstance();
       var userToken = pref.getString('token');
-      final url = Uri.parse('${AppConstants.baseUrl}/taxes');
+      final baseUrl = await ApiConfigService.getBaseUrl();
+      final url = Uri.parse('$baseUrl/taxes');
       final headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -327,6 +330,7 @@ class TakeOrderProvider with ChangeNotifier {
       SharedPreferences pref = await SharedPreferences.getInstance();
       var userToken = pref.getString('token');
       var userId = pref.getInt('id');
+      final baseUrl = await ApiConfigService.getBaseUrl();
 
       // Prepare items list
       List<Map<String, dynamic>> items = [];
@@ -390,7 +394,7 @@ class TakeOrderProvider with ChangeNotifier {
         }
       }
 
-      final url = Uri.parse('${AppConstants.baseUrl}/orders-store');
+      final url = Uri.parse('$baseUrl/orders-store');
       final headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -464,6 +468,7 @@ class TakeOrderProvider with ChangeNotifier {
     final SharedPreferences sharePref = await SharedPreferences.getInstance();
     String? userToken = sharePref.getString('token');
     int? user_id = sharePref.getInt('id');
+    final baseUrl = await ApiConfigService.getBaseUrl();
 
     debugPrint('=== Pending Orders API Debug ===');
     debugPrint('User ID: $user_id');
@@ -472,7 +477,7 @@ class TakeOrderProvider with ChangeNotifier {
     debugPrint('Is Refresh: $isRefresh');
 
     try {
-      final url = Uri.parse("${AppConstants.baseUrl}/orders/$user_id/pending");
+      final url = Uri.parse("$baseUrl/orders/$user_id/pending");
       debugPrint('API URL: $url');
 
        var response = await http.get(
@@ -539,15 +544,15 @@ class TakeOrderProvider with ChangeNotifier {
     final SharedPreferences sharePref = await SharedPreferences.getInstance();
     String? userToken = sharePref.getString('token');
     int? user_id = sharePref.getInt('id');
+    final baseUrl = await ApiConfigService.getBaseUrl();
 
     debugPrint('=== Complete Orders API Debug ===');
     debugPrint('User ID: $user_id');
     debugPrint('User Token: ${userToken?.substring(0, 20)}...');
     debugPrint('Page Index: $completePageIndex');
-    debugPrint('Is Refresh: $isRefreshComplete');
 
     try {
-      final url = Uri.parse("${AppConstants.baseUrl}/orders/$user_id/complete");
+      final url = Uri.parse("$baseUrl/orders/$user_id/complete");
       debugPrint('API URL: $url');
 
        var response = await http.get(

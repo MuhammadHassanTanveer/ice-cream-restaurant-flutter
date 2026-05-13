@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../common/widgets/snack_bar_widget.dart';
 import '../models/auth_model.dart';
-import '../util/app_constants.dart';
+import '../util/api_config_service.dart';
 
 class AuthProvider with ChangeNotifier {
 
@@ -21,7 +21,8 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> loginUser(context, email, password) async {
-    final String apiUrl = '${AppConstants.baseUrl}/login';
+    final baseUrl = await ApiConfigService.getBaseUrl();
+    final String apiUrl = '$baseUrl/login';
     final Map<String, dynamic> body = {
       "email": email,
       "password": password,
